@@ -1,5 +1,8 @@
-package com.kangho;
+package com.kangho.unary.service;
 
+import com.kangho.User;
+import com.kangho.UserIdx;
+import com.kangho.UserServiceGrpc;
 import io.grpc.Status;
 import io.grpc.StatusException;
 import io.grpc.stub.StreamObserver;
@@ -9,7 +12,7 @@ import java.util.Map;
 
 //Unary RPC 구현
 
-public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase{
+public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
 
     private final Map<Long, User> userMap = new HashMap<>();
 

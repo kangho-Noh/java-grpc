@@ -1,5 +1,9 @@
-package com.kangho;
+package com.kangho.unary;
 
+import com.kangho.User;
+import com.kangho.UserIdx;
+import com.kangho.UserServiceGrpc;
+import com.kangho.unary.service.UserServiceImpl;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Server;
