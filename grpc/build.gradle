@@ -11,7 +11,7 @@ plugins {
     id 'java'
     id 'com.google.protobuf' version '0.8.16'
 }
-group 'com.lattechiffon'
+group 'com.kangho'
 version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
