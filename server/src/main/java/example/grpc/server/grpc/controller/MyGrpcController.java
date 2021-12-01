@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import example.grpc.Userinfo;
-import example.grpc.server.domain.User;
 import example.grpc.server.form.MyIdForm;
 import example.grpc.server.form.MyUserForm;
 import example.grpc.server.grpc.controller.grpccall.GrpcCall;
