@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.example.receiver.domain.User;
+
 import example.grpc.Userinfo;
 
 @Repository
@@ -50,5 +52,18 @@ public class MemoryUserRepository implements MemoryRepository {
 			userMap.remove(id);
 		}
 		return "ok";
+	}
+
+	public Long update(Userinfo user) {
+
+		if(userMap.containsKey(user.getId())){
+			System.out.println("update user = " + user);
+
+			delete(user.getId());
+			userMap.put(user.getId(), user);
+			return user.getId();
+		}else{
+			return 0L;
+		}
 	}
 }

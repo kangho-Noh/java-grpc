@@ -2,7 +2,8 @@ package example.grpc.server.grpc.controller.grpccall;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import example.grpc.UserIdx;
 import example.grpc.UserList;
@@ -13,11 +14,14 @@ import io.grpc.ManagedChannelBuilder;
 
 public class GrpcCall {
 
-	public GrpcCall(){
+	@Autowired
+	GrpcConfig grpc;
+
+	public GrpcCall() {
 	}
 
-	public Userinfo getUserInfo(long userId){
-		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();;
+	public Userinfo getUserInfo(long userId) {
+		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();
 		UserinfoServiceGrpc.UserinfoServiceBlockingStub stub = UserinfoServiceGrpc.newBlockingStub(channel);
 
 		UserIdx request = UserIdx.newBuilder().setUserId(userId).build();
@@ -26,8 +30,8 @@ public class GrpcCall {
 		return userinfo;
 	}
 
-	public UserIdx setUserInfo(Userinfo userinfo){
-		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();;
+	public UserIdx setUserInfo(Userinfo userinfo) {
+		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();
 		UserinfoServiceGrpc.UserinfoServiceBlockingStub stub = UserinfoServiceGrpc.newBlockingStub(channel);
 
 		UserIdx useridx = stub.putUserinfo(userinfo);
@@ -35,20 +39,31 @@ public class GrpcCall {
 		return useridx;
 	}
 
-	public List<Userinfo> getUsers(){
-		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();;
+	public List<Userinfo> getUsers() {
+		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();
 		UserinfoServiceGrpc.UserinfoServiceBlockingStub stub = UserinfoServiceGrpc.newBlockingStub(channel);
 
 		UserList userList = stub.getAllUsers(UserIdx.newBuilder().build());
+		channel.shutdown();
 		return userList.getUsersList();
 	}
 
 	public UserIdx deleteUser(String id) {
-		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();;
+		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();
 		UserinfoServiceGrpc.UserinfoServiceBlockingStub stub = UserinfoServiceGrpc.newBlockingStub(channel);
 
 		UserIdx userIdx = stub.deleteUser(
 			UserIdx.newBuilder().setUserId(Long.parseLong(id)).build());
+		channel.shutdown();
+		return userIdx;
+	}
+
+	public UserIdx updateUserInfo(Userinfo user) {
+		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();
+		UserinfoServiceGrpc.UserinfoServiceBlockingStub stub = UserinfoServiceGrpc.newBlockingStub(channel);
+
+		UserIdx userIdx = stub.updateUser(user);
+		channel.shutdown();
 		return userIdx;
 	}
 }

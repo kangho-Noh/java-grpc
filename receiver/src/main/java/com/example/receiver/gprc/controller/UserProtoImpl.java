@@ -60,4 +60,18 @@ public class UserProtoImpl extends UserinfoServiceGrpc.UserinfoServiceImplBase {
 		responseObserver.onNext(request);
 		responseObserver.onCompleted();
 	}
+
+	@Override
+	public void updateUser(Userinfo request, StreamObserver<UserIdx> responseObserver) {
+
+		Long result = memoryRepository.update(request);
+		if(result == 0L){
+			responseObserver.onError(new StatusException(Status.NOT_FOUND));
+
+		}else{
+			responseObserver.onNext(
+				UserIdx.newBuilder().setUserId(result).build());
+			responseObserver.onCompleted();
+		}
+	}
 }
