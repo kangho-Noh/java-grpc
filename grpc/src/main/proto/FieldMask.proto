@@ -1,47 +1,29 @@
 syntax = "proto3";
-package grpc;
+package fieldmask;
 
 import "google/protobuf/field_mask.proto";
 
 option java_multiple_files = true;
-option java_package = "com.kangho";
-option java_outer_classname = "CustomerProto";
+option java_package = "example.grpc";
+option java_outer_classname = "UserProto";
 
-service CustomerService {
-  rpc getCustomer(CustomerId) returns (Customer); // 등록된 사용자를 조회하는 Unary RPC 메서드
+message Userinfo {
+  string id = 1;
+  string name = 2;
+  UserImage image = 3;
+  google.protobuf.FieldMask fieldmask = 4;
+  // ... more fields
 }
 
-message Accounts {
-  repeated Account account = 1;
+service UserinfoService {
+  rpc GetUserinfo (UserIdx) returns (Userinfo);
+  rpc PutUserinfo (Userinfo) returns (UserIdx);
 }
 
-message Account {
-
-  int32 id = 1;
-  string number = 2;
-  int32 customer_id = 3;
-
+message UserIdx {
+  string userId = 1;
 }
 
-message Customers {
-  repeated Customer customers = 1;
-}
-
-message Customer {
-
-  int32 id = 1;
-  string pesel = 2;
-  string name = 3;
-  CustomerType type = 4;
-  repeated Account accounts = 5;
-
-  enum CustomerType {
-    INDIVIDUAL = 0;
-    COMPANY = 1;
-  }
-
-}
-
-message CustomerId {
-  int32 id = 1;
+message UserImage{
+  string decodedData = 1;
 }

@@ -15,7 +15,7 @@ import io.grpc.ServerBuilder;
 public class GrpcApplication {
 	public static void main(String[] args) {
 		//Initialize gRPC Server
-		int port = 8080;
+		int port = 8081;
 		Server server = ServerBuilder.forPort(port).addService(new UserServiceImpl()).build();
 
 		try {
@@ -34,18 +34,18 @@ public class GrpcApplication {
 		/* shutdown handler end */
 
 		//gRPC Client (Unary RPC, 2 times)
-		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost",
-			8080).usePlaintext().build();
-		UserServiceGrpc.UserServiceBlockingStub stub = UserServiceGrpc.newBlockingStub(channel);
-		UserIdx setUserResult = stub.setUser(User.newBuilder().setUsername("Noh Kangho")
-			.setEmail("rkdgh98@gmail.com").addRoles("USER").addRoles("ADMIN").build());
-		System.out.println("Client : " + setUserResult.getIdx());
-
-		User getUserResult = stub.getUser(setUserResult);
-		System.out.println(getUserResult.toString());
-
-		//Release
-		channel.shutdown();
-		Runtime.getRuntime().exit(0);
+		// ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost",
+		// 	8080).usePlaintext().build();
+		// UserServiceGrpc.UserServiceBlockingStub stub = UserServiceGrpc.newBlockingStub(channel);
+		// UserIdx setUserResult = stub.setUser(User.newBuilder().setUsername("Noh Kangho")
+		// 	.setEmail("rkdgh98@gmail.com").addRoles("USER").addRoles("ADMIN").build());
+		// System.out.println("Client : " + setUserResult.getIdx());
+		//
+		// User getUserResult = stub.getUser(setUserResult);
+		// System.out.println(getUserResult.toString());
+		//
+		// //Release
+		// channel.shutdown();
+		//Runtime.getRuntime().exit(0);
 	}
 }

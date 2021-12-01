@@ -20,7 +20,7 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
 
 	@Override
 	public void setUser(User request, StreamObserver<UserIdx> responseObserver) {
-		request = request.toBuilder().setIdx(idxCounter++).build();
+		request.toBuilder().setIdx(idxCounter++).build();
 		userMap.put(request.getIdx(), request);
 
 		UserIdx response = UserIdx.newBuilder().setIdx(request.getIdx()).build();
