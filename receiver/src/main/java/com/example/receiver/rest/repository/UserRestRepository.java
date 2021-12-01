@@ -40,9 +40,20 @@ public class UserRestRepository{
 	}
 
 	public String delete(Long id) {
-		if(userMap.containsKey(id)){
-			userMap.remove(id);
-		}
+		userMap.remove(id);
 		return "ok";
+	}
+
+	public String update(User user) {
+
+		if(userMap.containsKey(user.getId())){
+			System.out.println("update user = " + user);
+
+			delete(user.getId());
+			userMap.put(user.getId(), user);
+			return "done";
+		}else{
+			return "noone";
+		}
 	}
 }

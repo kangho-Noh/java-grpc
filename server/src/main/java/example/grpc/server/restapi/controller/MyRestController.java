@@ -25,6 +25,24 @@ public class MyRestController {
 		return "restindex";
 	}
 
+	//CREATE
+	@GetMapping("/rest/user/new")
+	public String createForm() {
+		return "user-form";
+	}
+
+	@PostMapping("/rest/user/save")
+	public String saveUserRest(MyUserForm form) {
+		User user = new User();
+		user.setAge(form.getAge());
+		user.setEmail(form.getEmail());
+		user.setName(form.getName());
+		restCall.setData(user);
+		restCall.saveUser(user);
+		return "redirect:/rest";
+	}
+
+	//READ
 	@GetMapping("/rest/find")
 	public String restFind() {
 		return "find-form-rest";
@@ -44,22 +62,6 @@ public class MyRestController {
 		return "userinfo-rest";
 	}
 
-	@GetMapping("/rest/user/new")
-	public String createForm() {
-		return "user-form";
-	}
-
-	@PostMapping("/rest/user/save")
-	public String saveUserRest(MyUserForm form) {
-		User user = new User();
-		user.setAge(form.getAge());
-		user.setEmail(form.getEmail());
-		user.setId(form.getId());
-		user.setName(form.getName());
-		restCall.setData(user);
-		restCall.saveUser(user);
-		return "redirect:/rest";
-	}
 
 	@GetMapping("/rest/users")
 	public String list(Model model) {
@@ -69,6 +71,25 @@ public class MyRestController {
 		return "userList";
 	}
 
+	//UPDATE
+	@GetMapping("/rest/update")
+	public String updateForm() {
+		return "update-form-rest";
+	}
+
+	@PostMapping("/rest/update")
+	public String updateUserRest(MyUserForm form) {
+		User user = new User();
+		user.setAge(form.getAge());
+		user.setEmail(form.getEmail());
+		user.setId(form.getId());
+		user.setName(form.getName());
+		restCall.setData(user);
+		restCall.updateUser(user);
+		return "redirect:/rest";
+	}
+
+	//DELETE
 	@GetMapping("/rest/delete")
 	public String deleteUser(){
 		return "delete-rest";
@@ -80,4 +101,7 @@ public class MyRestController {
 		restCall.deleteUser(id);
 		return "redirect:/rest";
 	}
+
+
+
 }

@@ -40,4 +40,8 @@ public class UserRestController {
 		return userRestRepository.delete(id.getId());
 	}
 
+	@PostMapping("/rest/update")
+	public String updateUser(@RequestBody User user){
+		return userRestRepository.update(user);
+	}
 }
