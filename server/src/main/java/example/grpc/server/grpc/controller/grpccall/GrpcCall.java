@@ -10,11 +10,10 @@ import io.grpc.ManagedChannelBuilder;
 
 public class GrpcCall {
 
-
 	public GrpcCall(){
 	}
 
-	public static Userinfo getUserInfo(long userId){
+	public Userinfo getUserInfo(long userId){
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();;
 		UserinfoServiceGrpc.UserinfoServiceBlockingStub stub = UserinfoServiceGrpc.newBlockingStub(channel);
 
@@ -24,7 +23,7 @@ public class GrpcCall {
 		return userinfo;
 	}
 
-	public static UserIdx setUserInfo(Userinfo userinfo){
+	public UserIdx setUserInfo(Userinfo userinfo){
 		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();;
 		UserinfoServiceGrpc.UserinfoServiceBlockingStub stub = UserinfoServiceGrpc.newBlockingStub(channel);
 

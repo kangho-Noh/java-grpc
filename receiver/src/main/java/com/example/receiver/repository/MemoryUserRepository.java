@@ -30,6 +30,11 @@ public class MemoryUserRepository implements MemoryRepository{
 
 	@Override
 	public long save(Userinfo user) {
+		user = user.toBuilder().setId(idxCounter).build();
+
+		System.out.println("idxCounter = " + idxCounter);
+		System.out.println("user.getName() = " + user.getName());
+		System.out.println("user.getId() = " + user.getId());
 		userMap.put(idxCounter++, user);
 		return idxCounter-1;
 	}
