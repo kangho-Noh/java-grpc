@@ -1,5 +1,5 @@
 syntax = "proto3";
-package fieldmask;
+package userservice;
 
 import "google/protobuf/field_mask.proto";
 
@@ -12,20 +12,20 @@ message Userinfo {
   string name = 2;
   string email = 3;
   string age = 4;
-  //UserImage image = 3;
-  //google.protobuf.FieldMask fieldmask = 4;
-  // ... more fields
 }
 
 service UserinfoService {
   rpc GetUserinfo (UserIdx) returns (Userinfo);
   rpc PutUserinfo (Userinfo) returns (UserIdx);
+  rpc GetAllUsers (UserIdx) returns (UserList);
+
+}
+
+message UserList {
+  repeated Userinfo users = 1;
 }
 
 message UserIdx {
   int64 userId = 1;
 }
 
-//message UserImage{
-//  string decodedData = 1;
-//}

@@ -1,5 +1,7 @@
 package example.grpc.server.grpc.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import example.grpc.Userinfo;
-import example.grpc.server.domain.User;
 import example.grpc.server.grpc.controller.grpccall.GrpcCall;
 import example.grpc.server.restapi.controller.MyUserForm;
 import lombok.extern.slf4j.Slf4j;
@@ -48,8 +49,10 @@ public class MyGrpcController {
 	}
 
 	@GetMapping("/grpc/users")
-	public String grpcUsers(){
+	public String grpcUsers(Model model){
 
-		return "ok";
+		List<Userinfo> users = grpcCall.getUsers();
+		model.addAttribute("users", users);
+		return "grpc/userList-grpc";
 	}
 }

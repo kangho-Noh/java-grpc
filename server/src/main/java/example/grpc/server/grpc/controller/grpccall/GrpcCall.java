@@ -1,8 +1,11 @@
 package example.grpc.server.grpc.controller.grpccall;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import example.grpc.UserIdx;
+import example.grpc.UserList;
 import example.grpc.Userinfo;
 import example.grpc.UserinfoServiceGrpc;
 import io.grpc.ManagedChannel;
@@ -30,5 +33,13 @@ public class GrpcCall {
 		UserIdx useridx = stub.putUserinfo(userinfo);
 		channel.shutdown();
 		return useridx;
+	}
+
+	public List<Userinfo> getUsers(){
+		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();;
+		UserinfoServiceGrpc.UserinfoServiceBlockingStub stub = UserinfoServiceGrpc.newBlockingStub(channel);
+
+		UserList userList = stub.getAllUsers(UserIdx.newBuilder().build());
+		return userList.getUsersList();
 	}
 }

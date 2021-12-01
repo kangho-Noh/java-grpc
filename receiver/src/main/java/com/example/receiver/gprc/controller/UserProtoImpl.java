@@ -1,5 +1,7 @@
 package com.example.receiver.gprc.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -8,6 +10,7 @@ import com.example.receiver.repository.MemoryRepository;
 import com.example.receiver.repository.MemoryUserRepository;
 
 import example.grpc.UserIdx;
+import example.grpc.UserList;
 import example.grpc.Userinfo;
 import example.grpc.UserinfoServiceGrpc;
 import io.grpc.Status;
@@ -39,6 +42,15 @@ public class UserProtoImpl extends UserinfoServiceGrpc.UserinfoServiceImplBase {
 
 		UserIdx response = UserIdx.newBuilder().setUserId(memoryRepository.save(request)).build();
 		responseObserver.onNext(response);
+		responseObserver.onCompleted();
+	}
+
+	@Override
+	public void getAllUsers(UserIdx request, StreamObserver<UserList> responseObserver) {
+
+		List<Userinfo> users = memoryRepository.findAll();
+		UserList resp = UserList.newBuilder().addAllUsers(users).build();
+		responseObserver.onNext(resp);
 		responseObserver.onCompleted();
 	}
 }
