@@ -1,4 +1,4 @@
-package example.grpc.server.restapi.controller;
+package example.grpc.server.form;
 
 import lombok.Data;
 

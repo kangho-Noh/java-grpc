@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import example.grpc.Userinfo;
 import example.grpc.server.grpc.controller.grpccall.GrpcCall;
-import example.grpc.server.restapi.controller.MyIdForm;
-import example.grpc.server.restapi.controller.MyUserForm;
+import example.grpc.server.form.MyIdForm;
+import example.grpc.server.form.MyUserForm;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
