@@ -3,8 +3,8 @@ package com.example.receiver.user;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.example.receiver.repository.MemoryRepository;
-import com.example.receiver.repository.MemoryUserRepository;
+import com.example.receiver.gprc.repository.MemoryRepository;
+import com.example.receiver.gprc.repository.MemoryUserRepository;
 
 import example.grpc.Userinfo;
 

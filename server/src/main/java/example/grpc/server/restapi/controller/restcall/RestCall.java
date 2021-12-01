@@ -165,4 +165,37 @@ public class RestCall {
 
 		return result;
 	}
+
+	public String deleteUser(String id) {
+		// URL 설정
+		String workerIP = "localhost";
+		String workerPort = "8081";
+		String path = "/rest/delete";
+		String url = "http://"+workerIP+":"+workerPort+path;
+
+		// Body 설정 (JSON 형태)
+		JsonObject params=new JsonObject();
+		params.addProperty("id",Long.parseLong(id));
+
+		// Header 설정 ,TYPE=json
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		// 요청하기 위해 header와 body 합치기
+		HttpEntity<String> entity=new HttpEntity<String>(params.toString(),headers);
+
+		// POST 요청
+		RestTemplate template = new RestTemplate();
+		ResponseEntity<String> response = template.exchange(
+			url,
+			HttpMethod.POST,
+			entity,
+			String.class
+		);
+		//System.out.println("response.getBody() = " + response.getBody());
+
+		JsonParser jsonParser=new JsonParser();
+		String result = jsonParser.parse(response.getBody()).getAsString();
+		return result;
+	}
 }

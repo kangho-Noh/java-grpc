@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import example.grpc.Userinfo;
 import example.grpc.server.grpc.controller.grpccall.GrpcCall;
+import example.grpc.server.restapi.controller.MyIdForm;
 import example.grpc.server.restapi.controller.MyUserForm;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +25,18 @@ public class MyGrpcController {
 		return "grpc/grpcindex";
 	}
 
-	@GetMapping("/grpc/user/{userId}")
+	@GetMapping("/grpc/find")
+	public String restFind() {
+		return "grpc/find-form-grpc";
+	}
+
+	@PostMapping("/grpc/find")
+	public String restFindId(MyIdForm idForm) {
+		String id = idForm.getId();
+		return "redirect:/grpc/find/" + id;
+	}
+
+	@GetMapping("/grpc/find/{userId}")
 	public String getUserinfoGrpc(@PathVariable("userId") long userId, Model model) {
 		log.info("mappingPath userId={}", userId);
 		Userinfo user = grpcCall.getUserInfo(userId);
@@ -54,5 +66,17 @@ public class MyGrpcController {
 		List<Userinfo> users = grpcCall.getUsers();
 		model.addAttribute("users", users);
 		return "grpc/userList-grpc";
+	}
+
+	@GetMapping("/grpc/delete")
+	public String deleteUser(){
+		return "delete-rest";
+	}
+
+	@PostMapping("/grpc/delete")
+	public String deleteUserById(MyIdForm idForm) {
+		String id = idForm.getId();
+		grpcCall.deleteUser(id);
+		return "redirect:/grpc";
 	}
 }

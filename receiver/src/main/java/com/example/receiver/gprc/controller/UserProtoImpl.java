@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import net.devh.boot.grpc.server.service.GrpcService;
 
-import com.example.receiver.repository.MemoryRepository;
-import com.example.receiver.repository.MemoryUserRepository;
+import com.example.receiver.gprc.repository.MemoryUserRepository;
 
 import example.grpc.UserIdx;
 import example.grpc.UserList;
@@ -51,6 +50,14 @@ public class UserProtoImpl extends UserinfoServiceGrpc.UserinfoServiceImplBase {
 		List<Userinfo> users = memoryRepository.findAll();
 		UserList resp = UserList.newBuilder().addAllUsers(users).build();
 		responseObserver.onNext(resp);
+		responseObserver.onCompleted();
+	}
+
+	@Override
+	public void deleteUser(UserIdx request, StreamObserver<UserIdx> responseObserver) {
+
+		memoryRepository.delete(request.getUserId());
+		responseObserver.onNext(request);
 		responseObserver.onCompleted();
 	}
 }

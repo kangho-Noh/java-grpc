@@ -1,4 +1,4 @@
-package com.example.receiver.repository;
+package com.example.receiver.rest.repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,13 +21,13 @@ public class UserRestRepository{
 		user.setAge("24");
 		user.setEmail("rkdgh98@khu.ac.kr");
 		user.setId(999L);
-		user.setName("kangho");
+		user.setName("admin");
 		userMap.put(999L, user);
 	}
 
 	public long save(User user) {
-		user.setId(idxCounter++);
-		userMap.put(idxCounter, user);
+		user.setId(idxCounter);
+		userMap.put(idxCounter++, user);
 		return idxCounter-1;
 	}
 
@@ -37,5 +37,12 @@ public class UserRestRepository{
 
 	public List<User> findAll() {
 		return new ArrayList<>(userMap.values());
+	}
+
+	public String delete(Long id) {
+		if(userMap.containsKey(id)){
+			userMap.remove(id);
+		}
+		return "ok";
 	}
 }

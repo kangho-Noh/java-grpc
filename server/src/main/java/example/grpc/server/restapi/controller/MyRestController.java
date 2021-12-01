@@ -66,4 +66,16 @@ public class MyRestController {
 		model.addAttribute("users", users);
 		return "userList";
 	}
+
+	@GetMapping("/rest/delete")
+	public String deleteUser(){
+		return "delete-rest";
+	}
+
+	@PostMapping("/rest/delete")
+	public String deleteUserById(MyIdForm idForm){
+		String id = idForm.getId();
+		restCall.deleteUser(id);
+		return "redirect:/rest";
+	}
 }

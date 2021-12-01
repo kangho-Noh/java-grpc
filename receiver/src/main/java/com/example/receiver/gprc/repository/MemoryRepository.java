@@ -1,4 +1,4 @@
-package com.example.receiver.repository;
+package com.example.receiver.gprc.repository;
 
 import java.util.List;
 import java.util.Optional;

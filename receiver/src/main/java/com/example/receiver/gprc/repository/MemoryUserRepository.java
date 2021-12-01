@@ -1,4 +1,4 @@
-package com.example.receiver.repository;
+package com.example.receiver.gprc.repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,14 +7,10 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import com.example.receiver.domain.User;
-
 import example.grpc.Userinfo;
-import io.grpc.Status;
-import io.grpc.StatusException;
 
 @Repository
-public class MemoryUserRepository implements MemoryRepository{
+public class MemoryUserRepository implements MemoryRepository {
 
 	private static long idxCounter = 1;
 	private Map<Long, Userinfo> userMap = new HashMap<>();
@@ -24,7 +20,7 @@ public class MemoryUserRepository implements MemoryRepository{
 				.setAge("24")
 				.setEmail("rkdgh98@khu.ac.kr")
 				.setId(999)
-				.setName("kangho")
+				.setName("admin")
 			.build());
 	}
 
@@ -41,15 +37,18 @@ public class MemoryUserRepository implements MemoryRepository{
 
 	@Override
 	public Userinfo findById(Long userid) {
-		if (userMap.containsKey(userid)) {
-			return userMap.get(userid);
-		} else {
-			return null;
-		}
+		return userMap.getOrDefault(userid, null);
 	}
 
 	@Override
 	public List<Userinfo> findAll() {
 		return new ArrayList<>(userMap.values());
+	}
+
+	public String delete(Long id) {
+		if(userMap.containsKey(id)){
+			userMap.remove(id);
+		}
+		return "ok";
 	}
 }

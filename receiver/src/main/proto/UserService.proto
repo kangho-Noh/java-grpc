@@ -18,7 +18,7 @@ service UserinfoService {
   rpc GetUserinfo (UserIdx) returns (Userinfo);
   rpc PutUserinfo (Userinfo) returns (UserIdx);
   rpc GetAllUsers (UserIdx) returns (UserList);
-
+  rpc DeleteUser (UserIdx) returns (UserIdx);
 }
 
 message UserList {

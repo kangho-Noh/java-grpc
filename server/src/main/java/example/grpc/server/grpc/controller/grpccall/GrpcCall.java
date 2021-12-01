@@ -42,4 +42,13 @@ public class GrpcCall {
 		UserList userList = stub.getAllUsers(UserIdx.newBuilder().build());
 		return userList.getUsersList();
 	}
+
+	public UserIdx deleteUser(String id) {
+		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();;
+		UserinfoServiceGrpc.UserinfoServiceBlockingStub stub = UserinfoServiceGrpc.newBlockingStub(channel);
+
+		UserIdx userIdx = stub.deleteUser(
+			UserIdx.newBuilder().setUserId(Long.parseLong(id)).build());
+		return userIdx;
+	}
 }

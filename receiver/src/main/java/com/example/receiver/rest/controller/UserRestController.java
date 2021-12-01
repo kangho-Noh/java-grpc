@@ -3,7 +3,6 @@ package com.example.receiver.rest.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,11 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.receiver.domain.User;
-import com.example.receiver.repository.MemoryRepository;
-import com.example.receiver.repository.MemoryUserRepository;
-import com.example.receiver.repository.UserRestRepository;
-
-import example.grpc.Userinfo;
+import com.example.receiver.domain.UserIdRest;
+import com.example.receiver.rest.repository.UserRestRepository;
 
 @RestController
 public class UserRestController {
@@ -37,6 +33,11 @@ public class UserRestController {
 	@GetMapping("/rest/users/{userId}")
 	public User getUser(@PathVariable("userId") String userId){
 		return userRestRepository.findById(Long.parseLong(userId));
+	}
+
+	@PostMapping("/rest/delete")
+	public String deleteUser(@RequestBody UserIdRest id){
+		return userRestRepository.delete(id.getId());
 	}
 
 }
